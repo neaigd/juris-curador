@@ -73,8 +73,12 @@ class ZoteroIntegration:
             Dict[str, Any]: A dictionary formatted for Zotero JSON import.
         """
         zotero_item = {
-            "itemType": self._map_item_type_to_zotero(item_metadata.get("itemType")),
-            "title": item_metadata.get("title", "No Title"),
+            "itemType": self._map_item_type_to_zotero(
+                item_metadata.get("itemType")
+            ),
+            "title": item_metadata.get(
+                "title", "No Title"
+            ),
             "creators": self._format_creators_for_zotero(item_metadata.get("authors")),
             "date": item_metadata.get("date", ""), # YYYY-MM-DD or YYYY
             "url": item_metadata.get("url", ""),
@@ -83,9 +87,13 @@ class ZoteroIntegration:
             "journalAbbreviation": item_metadata.get("journalAbbreviation", ""),
             "volume": item_metadata.get("volume", ""),
             "issue": item_metadata.get("issue", ""),
-            "pages": item_metadata.get("pages", ""),
+            "pages": item_metadata.get(
+                "pages", ""
+            ),
             "publisher": item_metadata.get("publisher", ""),
-            "place": item_metadata.get("place", ""), # Publication place
+            "place": item_metadata.get(
+                "place", ""
+            ),  # Publication place
             "edition": item_metadata.get("edition", ""),
             "ISBN": item_metadata.get("ISBN", ""),
             "abstractNote": item_metadata.get("abstractNote", ""),
