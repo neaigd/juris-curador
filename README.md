@@ -12,10 +12,11 @@ Com base em tudo que discutimos, aqui está uma versão inicial e organizada do 
 
 ### ⚙️ Funcionalidades principais
 
-* 📌 **Extração de citações** em formato ABNT (autor-data) e geração da bibliografia correspondente.
-* 🔗 **Download automatizado de fontes** (PDFs ou páginas HTML que contenham PDFs jurídicos).
-* 🖍️ **Anotação automática de PDFs** com marcações visuais de trechos citados.
-* 📄 **Geração de entradas JSON compatíveis com Zotero**, contendo metadados como DOI, ISBN, URL, autores, etc.
+* 📌 **Formatação de Citações e Bibliografia**: Geração de citações no corpo do texto e bibliografia final em formato ABNT (implementado em `src/citation_formatter.py`).
+* 🔗 **Download Automatizado de Fontes**: Download de PDFs a partir de URLs diretas ou por busca em páginas web (implementado em `src/source_downloader.py`).
+* 🖍️ **Anotação Automática de PDFs**: Marcação de trechos relevantes em arquivos PDF, com fallback para identificação via LLM (implementado em `src/pdf_processing.py`).
+* 📄 **Geração de Entradas para Zotero**: Criação de arquivos JSON compatíveis para importação no Zotero, com metadados e links para os PDFs (implementado em `src/zotero_integration.py`).
+* 🛠️ **Utilitários e Configuração**: Funções auxiliares para gerenciamento de configuração (via `config.yaml`), logging e manipulação de arquivos (implementado em `src/utils.py`).
 * 🧩 Estrutura modular, facilitando expansão e integração com pipelines de escrita jurídica ou científica.
 
 ---
@@ -37,13 +38,20 @@ Com base em tudo que discutimos, aqui está uma versão inicial e organizada do 
 
 ```
 juris-curador/
+├── config.yaml          # Arquivo de configuração principal (gerado na primeira execução)
 ├── docs/                # Documentação do sistema
-├── exemplos/            # Exemplos de entrada e saída
+├── examples/            # Exemplos de entrada e saída (a serem adicionados)
 ├── src/                 # Código-fonte dos módulos
-│   ├── parser_citacoes.py
-│   ├── baixador_pdfs.py
-│   ├── anotador_pdfs.py
-│   └── ...
+│   ├── __init__.py
+│   ├── citation_formatter.py
+│   ├── llm_integration.py
+│   ├── pdf_processing.py
+│   ├── source_downloader.py
+│   ├── utils.py
+│   └── zotero_integration.py
+├── tests/               # Testes unitários e de integração
+│   ├── __init__.py
+│   └── test_placeholder.py # (testes reais a serem adicionados)
 ├── README.md            # Este arquivo
 └── requirements.txt     # Dependências do projeto
 ```
@@ -53,19 +61,48 @@ juris-curador/
 ### 📌 Requisitos
 
 * Python 3.10+
-* Zotero (opcional, para integração com citações)
-* Dependências (instaláveis via `pip install -r requirements.txt`)
+* Zotero (opcional, para integração com as entradas JSON geradas).
+* Dependências listadas em `requirements.txt` (instaláveis via `pip install -r requirements.txt`), que incluem:
+    * `PyMuPDF` para manipulação de PDFs.
+    * `requests` e `BeautifulSoup4` para download e scraping de fontes.
+    * `PyYAML` para gerenciamento da configuração.
+    * `google-generativeai` (ou SDK similar) para integração com LLM (atualmente simulado).
+* Uma chave de API para o serviço de LLM pode ser necessária para a funcionalidade completa de identificação de trechos por IA. Esta chave é configurada através da variável de ambiente especificada em `config.yaml` (e gerenciada por `src/utils.py`).
+
+---
+
+### 🛠️ Configuração
+
+O Juris-Curador utiliza um arquivo de configuração chamado `config.yaml`, localizado na raiz do projeto. Este arquivo permite personalizar diversas configurações, incluindo:
+
+* **Diretórios**: Caminhos para download de arquivos, PDFs anotados, exports do Zotero e logs.
+* **Cores de Destaque**: Cores (RGB) usadas para os diferentes tipos de anotações nos PDFs.
+* **Formatos de Saída**: Estilo de bibliografia (atualmente ABNT) e indentação do JSON para Zotero.
+* **LLM**: Nome da variável de ambiente que armazena a chave da API LLM e modelo padrão.
+* **Logging**: Nível de log, formato das mensagens e formato da data.
+
+Se o arquivo `config.yaml` não for encontrado na primeira execução, o sistema o criará automaticamente com as configurações padrão. É recomendável revisar e ajustar este arquivo conforme necessário.
 
 ---
 
 ### 🛣️ Roadmap
 
-* [x] Estrutura de documentação
-* [ ] Parser de citações e bibliografia
-* [ ] Downloader de PDFs (por link direto ou scraping leve)
-* [ ] Marcador automático de trechos em PDF
-* [ ] Exportador de entradas para o Zotero (JSON)
-* [ ] Interface opcional (CLI ou web leve)
+**Funcionalidades Implementadas:**
+* [x] Estrutura de documentação inicial.
+* [x] Parser de citações e bibliografia ABNT (Implementado em `src/citation_formatter.py`).
+* [x] Downloader de PDFs (por link direto ou scraping leve) (Implementado em `src/source_downloader.py`).
+* [x] Marcador automático de trechos em PDF (Implementado em `src/pdf_processing.py` com fallback de LLM).
+* [x] Exportador de entradas para o Zotero (JSON) (Implementado em `src/zotero_integration.py`).
+* [x] Módulo de integração LLM (base) (Implementado em `src/llm_integration.py`, atualmente com resposta simulada).
+* [x] Utilitários (configuração, logs) (Implementado em `src/utils.py`, utiliza `config.yaml`).
+
+**Próximos Passos:**
+* `[ ] Adicionar testes unitários e de integração abrangentes.`
+* `[ ] Implementar lógica real de chamada à API LLM em llm_integration.py (substituir mock).`
+* `[ ] Desenvolver o parser inicial de texto/documento de entrada para extrair citações e links (módulo principal do pipeline).`
+* `[ ] Integrar todos os módulos em um pipeline funcional principal.`
+* `[ ] Refinar a extração de metadados de PDFs.`
+* `[ ] Melhorar a interface de linha de comando (CLI).`
 
 ---
 
