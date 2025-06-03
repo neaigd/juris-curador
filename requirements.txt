@@ -4,3 +4,7 @@ requests>=2.31.0
 pytest>=7.4.0
 pydantic>=2.6.0
 python-dotenv>=1.0.0
+PyMuPDF
+beautifulsoup4
+google-generativeai
+PyYAML
