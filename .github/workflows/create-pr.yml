@@ -1,0 +1,26 @@
+name: Create Pull Request
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+
+jobs:
+  create_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Atualização automática pelo workflow
+          branch: auto/pr-${{ github.sha }}
+          title: 'Atualização automática - ${{ github.sha }}'
+          body: |
+            Esta PR foi criada automaticamente pelo workflow.
+            Por favor, revise as alterações e aprove para merge.
+          labels: automatic, ci
