@@ -79,6 +79,4 @@ Este projeto está em desenvolvimento. Se você deseja contribuir, envie sugest�
 
 Em definição. Sugestão inicial: [MIT License](https://opensource.org/licenses/MIT) ou [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.pt-br.html).
 
----
 
-Se desejar, posso salvar esse conteúdo diretamente em `README.md`. Deseja que eu gere esse arquivo agora?
