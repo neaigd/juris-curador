@@ -1,0 +1,40 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environments
+.env
+.venv/
+env/
+venv/
+
+# Logs
+logs/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Compiled
+*.so
+*.dll
+*.o
+*.a
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Misc
+*.log
+
+# IDEs
+.vscode/
+.idea/
+
+# Ignore generated files
+*.zip
+
+# Zotero artifacts
+*.zotero-bib
+*.zotero-json

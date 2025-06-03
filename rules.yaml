@@ -1,0 +1,126 @@
+project:
+  name: juris-curador
+  description: >
+    Projeto para automação da curadoria de fontes jurídicas,
+    extração, anotação e integração com Zotero e sistemas de versionamento.
+
+tasks:
+  - id: 1
+    title: Criar README.md inicial
+    description: Documentar visão geral, objetivos e estrutura do projeto.
+    status: done
+    priority: high
+    assigned_to: p31x070
+
+  - id: 2
+    title: Gerar arquivo .gitignore
+    description: Evitar versionar arquivos temporários e caches.
+    status: done
+    priority: high
+
+  - id: 3
+    title: Criar workflow GitHub Actions para CI Python
+    description: Automatizar testes, lint e instalação no push e PR.
+    status: done
+    priority: high
+    assigned_to: p31x070
+
+  - id: 4
+    title: Criar pasta tests/ e adicionar testes unitários iniciais
+    description: Testar funções básicas do processamento de PDF.
+    status: pending
+    priority: medium
+    assigned_to: p31x070
+
+  - id: 5
+    title: Implementar integração Zotero
+    description: Gerar arquivos JSON para importação automática no Zotero.
+    status: pending
+    priority: high
+    assigned_to: p31x070
+
+  - id: 6
+    title: Automatizar download e anotação de PDFs
+    description: Ferramenta para baixar e destacar trechos relevantes nos PDFs.
+    status: pending
+    priority: high
+    assigned_to: p31x070
+
+  - id: 7
+    title: Configurar pre-commit hooks
+    description: Configurar black, flake8 e pytest no pre-commit.
+    status: pending
+    priority: medium
+    assigned_to: p31x070
+
+github_actions:
+  workflows:
+    python-ci:
+      path: .github/workflows/python-ci.yml
+      triggers:
+        push:
+          branches: [main, master]
+        pull_request:
+          branches: [main, master]
+      jobs:
+        build:
+          runs-on: ubuntu-latest
+          steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up Python 3.11
+              uses: actions/setup-python@v5
+              with:
+                python-version: 3.11
+
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                pip install -r requirements.txt
+
+            - name: Run linters (flake8)
+              run: |
+                pip install flake8
+                flake8 src/
+
+            - name: Run tests (pytest)
+              run: |
+                pip install pytest
+                pytest tests/
+
+    create-pr:
+      path: .github/workflows/create-pr.yml
+      description: >
+        Workflow para criar PR automaticamente ao push em branches de feature,
+        com descrição gerada automaticamente.
+      triggers:
+        push:
+          branches-ignore: [main, master]
+      jobs:
+        create_pull_request:
+          runs-on: ubuntu-latest
+          steps:
+            - uses: actions/checkout@v4
+
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v5
+              with:
+                token: ${{ secrets.GITHUB_TOKEN }}
+                commit-message: Atualização automática pelo workflow
+                branch: auto/pr-${{ github.sha }}
+                title: 'Atualização automática - ${{ github.sha }}'
+                body: |
+                  Esta PR foi criada automaticamente pelo workflow.
+                  Revisar as alterações e aprovar para merge.
+                labels: automatic, ci
+
+logging:
+  level: DEBUG
+  enable_log_file: true
+  log_file_path: logs/build.log
+  log_format: "[%(asctime)s] %(levelname)s - %(message)s"
+
+errors:
+  notify_on_failure: true
+  fail_build_on_error: true
