@@ -184,7 +184,10 @@ class ZoteroIntegration:
 
 
             if pdf_path_for_item and not os.path.exists(pdf_path_for_item):
-                print(f"WARNING: PDF path specified but not found: {pdf_path_for_item} for item '{item_meta.get('title')}'. Skipping attachment.")
+                print(
+                    f"WARNING: PDF path specified but not found: {pdf_path_for_item} "
+                    f"for item '{item_meta.get('title')}'. Skipping attachment."
+                )
                 pdf_path_for_item = None
 
             zotero_json_item = self.create_zotero_json_item(item_meta, pdf_path=pdf_path_for_item)
@@ -203,7 +206,10 @@ class ZoteroIntegration:
             with open(output_filepath, 'w', encoding='utf-8') as f:
                 # Zotero typically expects an array of items at the top level of the JSON file.
                 json.dump(zotero_items_list, f, ensure_ascii=False, indent=4)
-            print(f"INFO: Zotero JSON export file successfully created at: {output_filepath}")
+            print(
+                f"INFO: Zotero JSON export file successfully created at: "
+                f"{output_filepath}"
+            )
             return True
         except IOError as e:
             print(f"ERROR: Could not write Zotero JSON file to {output_filepath}. Error: {e}")
@@ -279,8 +285,14 @@ if __name__ == '__main__':
     )
 
     if success:
-        print(f"Zotero export file generated: {output_json_path}")
-        print("You can try importing this file into Zotero (e.g., File > Import from Clipboard after copying content, or File > Import...).")
+        print(
+            f"Zotero export file generated: {output_json_path}"
+        )
+        print(
+            "You can try importing this file into Zotero "
+            "(e.g., File > Import from Clipboard after copying content, "
+            "or File > Import...)."
+        )
         print("Ensure that PDF paths are correct and accessible from Zotero's perspective for linking.")
     else:
         print("Zotero export file generation failed.")
