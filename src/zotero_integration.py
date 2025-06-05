@@ -287,7 +287,8 @@ if __name__ == '__main__':
     success = zotero_integrator.generate_zotero_export_file(
         all_items_metadata,
         output_json_path,
-        pdf_base_path=dummy_pdf_dir # Base path for relative PDF filenames like in item1_meta
+        pdf_base_path=dummy_pdf_dir  # Base path for relative PDF filenames
+        # like in item1_meta
     )
 
     if success:
@@ -299,7 +300,10 @@ if __name__ == '__main__':
             "(e.g., File > Import from Clipboard after copying content, "
             "or File > Import...)."
         )
-        print("Ensure that PDF paths are correct and accessible from Zotero's perspective for linking.")
+        print(
+            "Ensure that PDF paths are correct and accessible from Zotero's "
+            "perspective for linking."
+        )
     else:
         print("Zotero export file generation failed.")
 
@@ -308,6 +312,9 @@ if __name__ == '__main__':
     #     os.remove(dummy_pdf_path_item1)
     # if os.path.exists(output_json_path):
     #     os.remove(output_json_path)
-    # if os.path.exists(dummy_pdf_dir) and not os.listdir(dummy_pdf_dir): # Remove dir if empty
+    # if os.path.exists(dummy_pdf_dir) and not os.listdir(dummy_pdf_dir):
     #     os.rmdir(dummy_pdf_dir)
-    # print(f"Cleaned up dummy files in {dummy_pdf_dir}. Manual cleanup may be needed for absolute paths.")
+    # print(
+    #     f"Cleaned up dummy files in {dummy_pdf_dir}. Manual cleanup may be "
+    #     "needed for absolute paths."
+    # )
