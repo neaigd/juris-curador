@@ -82,9 +82,15 @@ class ZoteroIntegration:
             "creators": self._format_creators_for_zotero(item_metadata.get("authors")),
             "date": item_metadata.get("date", ""), # YYYY-MM-DD or YYYY
             "url": item_metadata.get("url", ""),
-            "DOI": item_metadata.get("doi", ""),
-            "publicationTitle": item_metadata.get("publicationTitle", ""), # Journal name, Book series
-            "journalAbbreviation": item_metadata.get("journalAbbreviation", ""),
+            "DOI": item_metadata.get(
+                "doi", ""
+            ),
+            "publicationTitle": item_metadata.get(
+                "publicationTitle", ""
+            ),  # Journal name, Book series
+            "journalAbbreviation": item_metadata.get(
+                "journalAbbreviation", ""
+            ),
             "volume": item_metadata.get("volume", ""),
             "issue": item_metadata.get("issue", ""),
             "pages": item_metadata.get(
@@ -123,7 +129,6 @@ class ZoteroIntegration:
              zotero_item["tags"] = tags # Assume already in Zotero format
         else:
             zotero_item["tags"] = []
-
 
         # Attachments (for PDF)
         zotero_item["attachments"] = []
