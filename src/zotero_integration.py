@@ -82,9 +82,15 @@ class ZoteroIntegration:
             "creators": self._format_creators_for_zotero(item_metadata.get("authors")),
             "date": item_metadata.get("date", ""), # YYYY-MM-DD or YYYY
             "url": item_metadata.get("url", ""),
-            "DOI": item_metadata.get("doi", ""),
-            "publicationTitle": item_metadata.get("publicationTitle", ""), # Journal name, Book series
-            "journalAbbreviation": item_metadata.get("journalAbbreviation", ""),
+            "DOI": item_metadata.get(
+                "doi", ""
+            ),
+            "publicationTitle": item_metadata.get(
+                "publicationTitle", ""
+            ),  # Journal name, Book series
+            "journalAbbreviation": item_metadata.get(
+                "journalAbbreviation", ""
+            ),
             "volume": item_metadata.get("volume", ""),
             "issue": item_metadata.get("issue", ""),
             "pages": item_metadata.get(
@@ -94,39 +100,68 @@ class ZoteroIntegration:
             "place": item_metadata.get(
                 "place", ""
             ),  # Publication place
-            "edition": item_metadata.get("edition", ""),
+            "edition": item_metadata.get(
+                "edition", ""
+            ),
             "ISBN": item_metadata.get("ISBN", ""),
             "abstractNote": item_metadata.get("abstractNote", ""),
-            "language": item_metadata.get("language", "pt-BR"), # Default to Portuguese/Brazil
-            "shortTitle": item_metadata.get("shortTitle", ""),
-            "archive": item_metadata.get("archive", ""),
-            "archiveLocation": item_metadata.get("archiveLocation", ""),
-            "libraryCatalog": item_metadata.get("libraryCatalog", ""),
-            "callNumber": item_metadata.get("callNumber", ""),
-            "rights": item_metadata.get("rights", ""),
-            "extra": item_metadata.get("extra", ""),
-            "series": item_metadata.get("series", ""),
-            "seriesNumber": item_metadata.get("seriesNumber", ""),
-            "numberOfVolumes": item_metadata.get("numberOfVolumes",""),
-            "conferenceName": item_metadata.get("conferenceName",""),
+            "language": item_metadata.get(
+                "language", "pt-BR"
+            ),  # Default to Portuguese/Brazil
+            "shortTitle": item_metadata.get(
+                "shortTitle", ""
+            ),
+            "archive": item_metadata.get(
+                "archive", ""
+            ),
+            "archiveLocation": item_metadata.get(
+                "archiveLocation", ""
+            ),
+            "libraryCatalog": item_metadata.get(
+                "libraryCatalog", ""
+            ),
+            "callNumber": item_metadata.get(
+                "callNumber", ""
+            ),
+            "rights": item_metadata.get(
+                "rights", ""
+            ),
+            "extra": item_metadata.get(
+                "extra", ""
+            ),
+            "series": item_metadata.get(
+                "series", ""
+            ),
+            "seriesNumber": item_metadata.get(
+                "seriesNumber", ""
+            ),
+            "numberOfVolumes": item_metadata.get(
+                "numberOfVolumes", ""
+            ),
+            "conferenceName": item_metadata.get(
+                "conferenceName", ""
+            ),
         }
 
         # Tags
         tags = item_metadata.get("tags", [])
         if isinstance(tags, list) and all(isinstance(tag, str) for tag in tags):
-            zotero_item["tags"] = [{"tag": t} for t in tags]
+            zotero_item["tags"] = [
+                {"tag": t} for t in tags
+            ]
         elif isinstance(tags, list) and tags and isinstance(tags[0], dict) and "tag" in tags[0]:
              zotero_item["tags"] = tags # Assume already in Zotero format
         else:
             zotero_item["tags"] = []
-
 
         # Attachments (for PDF)
         zotero_item["attachments"] = []
         if pdf_path and os.path.exists(pdf_path):
             abs_pdf_path = os.path.abspath(pdf_path)
             attachment = {
-                "title": item_metadata.get("title", "Attached PDF") + " (PDF)",
+                "title": item_metadata.get(
+                    "title", "Attached PDF"
+                ) + " (PDF)",
                 # "path": abs_pdf_path, # Zotero desktop uses 'path' for linked files
                 "localPath": abs_pdf_path, # Some importers might use this or 'path'
                                        # For Zotero Better BibTeX JSON, it's often `fileAttachments` array with `path`
@@ -281,7 +316,8 @@ if __name__ == '__main__':
     success = zotero_integrator.generate_zotero_export_file(
         all_items_metadata,
         output_json_path,
-        pdf_base_path=dummy_pdf_dir # Base path for relative PDF filenames like in item1_meta
+        pdf_base_path=dummy_pdf_dir  # Base path for relative PDF filenames
+        # like in item1_meta
     )
 
     if success:
@@ -293,7 +329,10 @@ if __name__ == '__main__':
             "(e.g., File > Import from Clipboard after copying content, "
             "or File > Import...)."
         )
-        print("Ensure that PDF paths are correct and accessible from Zotero's perspective for linking.")
+        print(
+            "Ensure that PDF paths are correct and accessible from Zotero's "
+            "perspective for linking."
+        )
     else:
         print("Zotero export file generation failed.")
 
@@ -302,6 +341,9 @@ if __name__ == '__main__':
     #     os.remove(dummy_pdf_path_item1)
     # if os.path.exists(output_json_path):
     #     os.remove(output_json_path)
-    # if os.path.exists(dummy_pdf_dir) and not os.listdir(dummy_pdf_dir): # Remove dir if empty
+    # if os.path.exists(dummy_pdf_dir) and not os.listdir(dummy_pdf_dir):
     #     os.rmdir(dummy_pdf_dir)
-    # print(f"Cleaned up dummy files in {dummy_pdf_dir}. Manual cleanup may be needed for absolute paths.")
+    # print(
+    #     f"Cleaned up dummy files in {dummy_pdf_dir}. Manual cleanup may be "
+    #     "needed for absolute paths."
+    # )
