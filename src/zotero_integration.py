@@ -105,18 +105,42 @@ class ZoteroIntegration:
             ),
             "ISBN": item_metadata.get("ISBN", ""),
             "abstractNote": item_metadata.get("abstractNote", ""),
-            "language": item_metadata.get("language", "pt-BR"), # Default to Portuguese/Brazil
-            "shortTitle": item_metadata.get("shortTitle", ""),
-            "archive": item_metadata.get("archive", ""),
-            "archiveLocation": item_metadata.get("archiveLocation", ""),
-            "libraryCatalog": item_metadata.get("libraryCatalog", ""),
-            "callNumber": item_metadata.get("callNumber", ""),
-            "rights": item_metadata.get("rights", ""),
-            "extra": item_metadata.get("extra", ""),
-            "series": item_metadata.get("series", ""),
-            "seriesNumber": item_metadata.get("seriesNumber", ""),
-            "numberOfVolumes": item_metadata.get("numberOfVolumes",""),
-            "conferenceName": item_metadata.get("conferenceName",""),
+            "language": item_metadata.get(
+                "language", "pt-BR"
+            ),  # Default to Portuguese/Brazil
+            "shortTitle": item_metadata.get(
+                "shortTitle", ""
+            ),
+            "archive": item_metadata.get(
+                "archive", ""
+            ),
+            "archiveLocation": item_metadata.get(
+                "archiveLocation", ""
+            ),
+            "libraryCatalog": item_metadata.get(
+                "libraryCatalog", ""
+            ),
+            "callNumber": item_metadata.get(
+                "callNumber", ""
+            ),
+            "rights": item_metadata.get(
+                "rights", ""
+            ),
+            "extra": item_metadata.get(
+                "extra", ""
+            ),
+            "series": item_metadata.get(
+                "series", ""
+            ),
+            "seriesNumber": item_metadata.get(
+                "seriesNumber", ""
+            ),
+            "numberOfVolumes": item_metadata.get(
+                "numberOfVolumes", ""
+            ),
+            "conferenceName": item_metadata.get(
+                "conferenceName", ""
+            ),
         }
 
         # Tags
